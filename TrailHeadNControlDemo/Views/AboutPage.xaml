@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TrailHeadNControlDemo.Views.AboutPage"
-             xmlns:vm="clr-namespace:TrailHeadNControlDemo.ViewModels"
+             xmlns:vm="clr-namespace:TrailHeadNControlDemo.ViewModels" xmlns:controls="clr-namespace:TrailHeadNControlDemo.Controls"
              Title="{Binding Title}">
     
     <ContentPage.BindingContext>
@@ -31,11 +31,14 @@
             <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
                 <Label Text="Trailhead: Your Software Experts" FontSize="Title"/>
                 <Label Text="Each Trailhead partner is top-tier talent with decades of consulting experience and world-class qualifications. When you engage with a Trailhead partner, you are in good hands." FontSize="16" Padding="0,0,0,40"/>
-                
-                <Button Text="Learn more"
-                        Command="{Binding OpenWebCommand}"
-                        BackgroundColor="{StaticResource Primary}"
-                        TextColor="White" />
+
+                <controls:CircularButtonControl Text="Learn more" 
+                                                TextColor="Pink"
+                                                FontSize="20"
+                                                HeightRequest="175"
+                                                WidthRequest="175"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                HorizontalOptions="Center"/>
             </StackLayout>
         </ScrollView>
     </Grid>
