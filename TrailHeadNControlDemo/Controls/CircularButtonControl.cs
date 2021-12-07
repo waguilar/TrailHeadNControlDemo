@@ -1,6 +1,7 @@
 ﻿using NControl.Abstractions;
 using NGraphics;
 using System.Collections.Generic;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace TrailHeadNControlDemo.Controls
@@ -9,8 +10,27 @@ namespace TrailHeadNControlDemo.Controls
     {
         #region Bindable Properties
 
+        public new static BindableProperty BackgroundColorProperty =
+            BindableProperty.Create(nameof(BackgroundColor),
+                                    typeof(Xamarin.Forms.Color),
+                                    typeof(CircularButtonControl),
+                                    propertyChanged: (b, o, n) => ((CircularButtonControl)b).BackgroundColor = (Xamarin.Forms.Color)n);
+
+        public static BindableProperty CommandProperty =
+                    BindableProperty.Create(nameof(Command),
+                                    typeof(ICommand),
+                                    typeof(CircularButtonControl),
+                                    defaultBindingMode: BindingMode.TwoWay,
+                                    propertyChanged: (b, o, n) => ((CircularButtonControl)b).Command = (ICommand)n);
+
+        public static BindableProperty FontSizeProperty =
+            BindableProperty.Create(nameof(FontSize),
+                                    typeof(short),
+                                    typeof(CircularButtonControl),
+                                    propertyChanged: (b, o, n) => ((CircularButtonControl)b).FontSize = (short)n);
+
         public static BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor),
+                    BindableProperty.Create(nameof(TextColor),
                                     typeof(Xamarin.Forms.Color),
                                     typeof(CircularButtonControl),
                                     propertyChanged: (b, o, n) => ((CircularButtonControl)b).TextColor = (Xamarin.Forms.Color)n);
@@ -20,19 +40,6 @@ namespace TrailHeadNControlDemo.Controls
                                     typeof(string),
                                     typeof(CircularButtonControl),
                                     propertyChanged: (b, o, n) => ((CircularButtonControl)b).Text = (string)n);
-
-        public static BindableProperty FontSizeProperty =
-            BindableProperty.Create(nameof(FontSize),
-                                    typeof(short),
-                                    typeof(CircularButtonControl),
-                                    propertyChanged: (b, o, n) => ((CircularButtonControl)b).FontSize = (short)n);
-
-        public new static BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor),
-                                    typeof(Xamarin.Forms.Color),
-                                    typeof(CircularButtonControl),
-                                    propertyChanged: (b, o, n) => ((CircularButtonControl)b).BackgroundColor = (Xamarin.Forms.Color)n);
-
         #endregion Bindable Properties
 
         private readonly NControlView _background;
@@ -64,14 +71,22 @@ namespace TrailHeadNControlDemo.Controls
 
         #region Properties
 
-        public string Text
+        public new Xamarin.Forms.Color BackgroundColor
         {
-            get => GetValue(TextProperty) as string;
+            get => (Xamarin.Forms.Color)GetValue(BackgroundColorProperty);
             set
             {
-                SetValue(TextProperty, value);
-                _label.Text = value;
+                SetValue(BackgroundColorProperty, value);
                 Invalidate();
+            }
+        }
+
+        public ICommand Command
+        {
+            get => GetValue(CommandProperty) as ICommand;
+            set
+            {
+                SetValue(CommandProperty, value);
             }
         }
 
@@ -86,6 +101,16 @@ namespace TrailHeadNControlDemo.Controls
             }
         }
 
+        public string Text
+        {
+            get => GetValue(TextProperty) as string;
+            set
+            {
+                SetValue(TextProperty, value);
+                _label.Text = value;
+                Invalidate();
+            }
+        }
         public Xamarin.Forms.Color TextColor
         {
             get => (Xamarin.Forms.Color)GetValue(TextColorProperty);
@@ -96,17 +121,6 @@ namespace TrailHeadNControlDemo.Controls
                 Invalidate();
             }
         }
-
-        public new Xamarin.Forms.Color BackgroundColor
-        {
-            get => (Xamarin.Forms.Color)GetValue(BackgroundColorProperty);
-            set
-            {
-                SetValue(BackgroundColorProperty, value);
-                Invalidate();
-            }
-        }
-
         #endregion Properties
 
         #region Methods
@@ -129,7 +143,14 @@ namespace TrailHeadNControlDemo.Controls
         {
             base.TouchesEnded(points);
             this.ScaleTo(1.0, 40, Easing.CubicInOut);
+            CallCommandIfAvailable();
             return true;
+        }
+
+        void CallCommandIfAvailable()
+        {
+            if (Command != null && Command.CanExecute(null))
+                Command.Execute(null);
         }
 
         #endregion Methods
