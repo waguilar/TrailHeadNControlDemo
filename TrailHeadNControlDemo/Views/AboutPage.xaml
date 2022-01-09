@@ -32,6 +32,16 @@
                 <Label Text="Trailhead: Your Software Experts" FontSize="Title"/>
                 <Label Text="Each Trailhead partner is top-tier talent with decades of consulting experience and world-class qualifications. When you engage with a Trailhead partner, you are in good hands." FontSize="16" Padding="0,0,0,40"/>
 
+                <!--<controls:MyCustomCircularButton
+                                                Text="Learn more"
+                                                TextColor="White"
+                                                FontSize="20"
+                                                HeightRequest="150"
+                                                WidthRequest="150"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                HorizontalOptions="Center"
+                                                Command="{Binding OpenWebCommand}"/>-->
+
                 <controls:CircularButtonControl Text="Learn more"
                                                 TextColor="White"
                                                 FontSize="20"
@@ -40,6 +50,7 @@
                                                 BackgroundColor="{StaticResource Primary}"
                                                 HorizontalOptions="Center"
                                                 Command="{Binding OpenWebCommand}"/>
+                
             </StackLayout>
         </ScrollView>
     </Grid>

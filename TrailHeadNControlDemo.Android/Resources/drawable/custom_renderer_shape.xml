@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:state_pressed="true"
+        android:drawable="@drawable/button_pressed_custom_renderer_shape" />
+  <!-- pressed -->
+  <item android:state_focused="true"
+        android:drawable="@drawable/button_focused_custom_renderer_shape" />
+  <!-- focused -->
+  <item android:state_hovered="true"
+        android:drawable="@drawable/button_focused_custom_renderer_shape" />
+  <!-- hovered -->
+  <item android:drawable="@drawable/button_normal_custom_renderer_shape" />
+  <!-- default -->
+</selector>
